@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<title>Happy GF's Day!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Dancing+Script:wght@600;700&family=Poppins:wght@400;600&display=swap');
+
+  :root{
+    --plum: #2B0B2E;
+    --plum-deep: #1A0620;
+    --hotpink: #FF2E7E;
+    --magenta: #C6006B;
+    --violet: #7B2FF7;
+    --gold: #FFD23F;
+    --cream: #FFF3EE;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255,46,126,0.35), transparent 45%),
+      radial-gradient(circle at 80% 85%, rgba(123,47,247,0.35), transparent 45%),
+      linear-gradient(160deg, var(--plum-deep), var(--plum) 60%, #3a0e3f 100%);
+    font-family:'Poppins', sans-serif;
+    position:relative;
+  }
+
+  #stage{
+    position:relative;
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+
+  canvas#fx{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+  }
+
+  .eyebrow{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    font-size:clamp(11px, 1.6vw, 15px);
+    color:var(--gold);
+    opacity:0;
+    transform:translateY(10px);
+    animation: fadeUp 0.7s ease-out 0.3s forwards;
+    margin-bottom:14px;
+  }
+
+  .headline{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    line-height:1.05;
+    font-size:clamp(28px, 7.2vw, 78px);
+    color:var(--cream);
+    margin:0;
+    max-width:90vw;
+  }
+
+  .headline .word{
+    display:inline-block;
+    margin:0 0.14em;
+    opacity:0;
+    transform:translateY(40px) rotate(-4deg) scale(0.8);
+    animation: popIn 0.75s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+
+  .headline .word.pink{ color: var(--hotpink); text-shadow: 0 0 26px rgba(255,46,126,0.6); }
+  .headline .word.gold{ color: var(--gold); text-shadow: 0 0 26px rgba(255,210,63,0.55); }
+  .headline .word.violet{ color: var(--violet); text-shadow: 0 0 26px rgba(123,47,247,0.55); }
+  .headline .word.cream{ color: var(--cream); }
+
+  .signature{
+    font-family:'Dancing Script', cursive;
+    font-weight:700;
+    font-size:clamp(30px, 6vw, 58px);
+    margin-top:18px;
+    background: linear-gradient(90deg, var(--gold), var(--hotpink) 45%, var(--violet));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    opacity:0;
+    animation: fadeUp 0.9s ease-out 1.6s forwards, shimmer 4s linear 2.5s infinite;
+    background-size:200% 100%;
+  }
+
+  .sub{
+    font-family:'Poppins', sans-serif;
+    font-weight:400;
+    color: rgba(255,243,238,0.75);
+    font-size:clamp(13px, 2vw, 17px);
+    margin-top:10px;
+    opacity:0;
+    animation: fadeUp 0.8s ease-out 2s forwards;
+    letter-spacing:0.02em;
+  }
+
+  .hearts-row{
+    margin-top:26px;
+    display:flex;
+    gap:10px;
+    opacity:0;
+    animation: fadeUp 0.8s ease-out 2.2s forwards;
+  }
+
+  .hearts-row span{
+    font-size:clamp(18px, 3vw, 28px);
+    display:inline-block;
+    animation: bob 1.8s ease-in-out infinite;
+  }
+  .hearts-row span:nth-child(2){ animation-delay:0.2s; }
+  .hearts-row span:nth-child(3){ animation-delay:0.4s; }
+  .hearts-row span:nth-child(4){ animation-delay:0.6s; }
+  .hearts-row span:nth-child(5){ animation-delay:0.8s; }
+
+  @keyframes popIn{
+    0%{ opacity:0; transform:translateY(40px) rotate(-4deg) scale(0.8); }
+    60%{ opacity:1; transform:translateY(-6px) rotate(2deg) scale(1.05); }
+    100%{ opacity:1; transform:translateY(0) rotate(0deg) scale(1); }
+  }
+
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  @keyframes shimmer{
+    0%{ background-position: 0% 50%; }
+    100%{ background-position: 200% 50%; }
+  }
+
+  @keyframes bob{
+    0%,100%{ transform: translateY(0) scale(1); }
+    50%{ transform: translateY(-8px) scale(1.1); }
+  }
+
+  .glow-ring{
+    position:absolute;
+    width:min(70vw, 620px);
+    height:min(70vw, 620px);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,46,126,0.18), transparent 60%);
+    filter: blur(10px);
+    animation: pulse 3.2s ease-in-out infinite;
+    z-index:0;
+  }
+
+  @keyframes pulse{
+    0%,100%{ transform:scale(1); opacity:0.7; }
+    50%{ transform:scale(1.12); opacity:1; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .headline .word, .signature, .sub, .eyebrow, .hearts-row, .hearts-row span, .glow-ring{
+      animation: none !important;
+      opacity:1 !important;
+      transform:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="glow-ring"></div>
+  <canvas id="fx"></canvas>
+  <div class="eyebrow">Hi!</div>
+  <h1 class="headline">
+    <span class="word pink">Happy</span><span class="word gold">GF's</span><span class="word violet">Day</span><span class="word cream">Mga</span><span class="word pink">Babae</span><span class="word gold">ni</span><span class="word violet">Yangks!</span>
+  </h1>
+  <div class="signature">I love you adu-adu 💕</div>
+  <div class="sub">Kelan labas natin?</div>
+  <div class="hearts-row">
+    <span>💗</span><span>✨</span><span>💖</span><span>✨</span><span>💗</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var canvas = document.getElementById('fx');
+  var ctx = canvas.getContext('2d');
+  var W, H;
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var colors = ['#FF2E7E', '#FFD23F', '#7B2FF7', '#FFF3EE'];
+  var particles = [];
+  var particleCount = reduce ? 0 : 42;
+
+  function makeParticle(startBurst){
+    return {
+      x: Math.random() * W,
+      y: startBurst ? H/2 + (Math.random()-0.5)*60 : H + Math.random()*60,
+      vx: (Math.random()-0.5) * (startBurst ? 6 : 0.6),
+      vy: startBurst ? -(Math.random()*7 + 3) : -(Math.random()*0.9 + 0.4),
+      size: Math.random()*10 + 6,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      shape: Math.random() > 0.5 ? 'heart' : 'dot',
+      rot: Math.random()*Math.PI*2,
+      vr: (Math.random()-0.5)*0.08,
+      life: 0,
+      gravity: startBurst ? 0.12 : 0
+    };
+  }
+
+  for (var i=0;i<particleCount;i++){
+    particles.push(makeParticle(false));
+  }
+
+  // initial confetti burst
+  var burst = [];
+  if (!reduce){
+    for (var b=0; b<70; b++){
+      burst.push(makeParticle(true));
+    }
+  }
+
+  function drawHeart(p){
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = Math.max(0, 1 - p.life/500);
+    var s = p.size/10;
+    ctx.beginPath();
+    ctx.moveTo(0, s*3);
+    ctx.bezierCurveTo(s*6, -s*2, s*3, -s*6, 0, -s*1.5);
+    ctx.bezierCurveTo(-s*3, -s*6, -s*6, -s*2, 0, s*3);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawDot(p){
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, 1 - p.life/500);
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size*0.35, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function step(){
+    ctx.clearRect(0,0,W,H);
+
+    particles.forEach(function(p){
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      if (p.y < -20){
+        p.y = H + 20;
+        p.x = Math.random()*W;
+      }
+      if (p.shape === 'heart') drawHeart(p); else drawDot(p);
+    });
+
+    for (var j = burst.length - 1; j >= 0; j--){
+      var p = burst[j];
+      p.vy += p.gravity;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.life += 6;
+      if (p.shape === 'heart') drawHeart(p); else drawDot(p);
+      if (p.life > 480) burst.splice(j,1);
+    }
+
+    requestAnimationFrame(step);
+  }
+  step();
+})();
+</script>
+</body>
+</html>
